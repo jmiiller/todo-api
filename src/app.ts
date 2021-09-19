@@ -3,9 +3,7 @@ import bodyParser from "body-parser";
 import responseTime from "response-time";
 import path from "path";
 import expressBunyanLogger from "express-bunyan-logger";
-
 import { health } from "./routes/health";
-
 
 // Create Express server
 const app = express();
