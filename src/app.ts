@@ -2,8 +2,9 @@ import express from "express"; // compresses requests
 import bodyParser from "body-parser";
 import responseTime from "response-time";
 import path from "path";
+import expressBunyanLogger from "express-bunyan-logger";
 
-import { health } from './routes/health';
+import { health } from "./routes/health";
 
 
 // Create Express server
@@ -15,8 +16,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(responseTime());
 app.use(
-    express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+    express.static(path.join(__dirname, "public"))
 );
+app.use(expressBunyanLogger({
+  name: "todo-api",
+  streams: [{
+    level: "info",
+    stream: process.stdout
+  }]
+}));
 
 /**
  * Primary app routes.
