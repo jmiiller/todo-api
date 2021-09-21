@@ -27,11 +27,9 @@ app.use(
     ],
   })
 );
-applyApolloMiddleware(app);
-/**
- * Primary app routes.
- */
-app.get('/health', health);
-app.get('*', pageNotFound);
+applyApolloMiddleware(app).then(() => {
+  app.get('/health', health);
+  app.get('/*', pageNotFound);
+});
 
 export default app;
