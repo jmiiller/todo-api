@@ -1,0 +1,7 @@
+type Query {
+  todoItems: [TodoItem]
+}
+
+type TodoItem {
+  content: String
+}

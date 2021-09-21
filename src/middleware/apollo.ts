@@ -1,9 +1,17 @@
 import { Express } from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
+import fs from 'fs';
+import path from 'path';
 import resolvers from '../graphql/resolvers';
-import typeDefs from '../graphql/schema';
 
 export default async function applyApolloMiddleware(app: Express) {
+  const buffer = fs.readFileSync(
+    path.join(__dirname, '../graphql/schema.graphql'),
+    'utf8'
+  );
+  const typeDefs = gql`
+    ${buffer}
+  `;
   const server = new ApolloServer({ typeDefs, resolvers });
   await server.start();
 
