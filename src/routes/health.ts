@@ -1,12 +1,13 @@
-"use strict";
-
-import { Response, Request, NextFunction } from "express";
-
+import { Response, Request, NextFunction } from 'express';
 
 /**
  * List of API examples.
  * @route GET /api
  */
-export const health = (req: Request, res: Response) => {
-    res.sendStatus(200);
+const health = (req: Request, res: Response, next: NextFunction) => {
+  res.sendStatus(200);
+
+  next();
 };
+
+export default health;

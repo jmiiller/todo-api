@@ -3,8 +3,9 @@ import bodyParser from 'body-parser';
 import responseTime from 'response-time';
 import path from 'path';
 import expressBunyanLogger from 'express-bunyan-logger';
-import { health } from './routes/health';
+import health from './routes/health';
 import applyApolloMiddleware from './middleware/apollo';
+import pageNotFound from './routes/pageNotFound';
 
 // Create Express server
 const app = express();
@@ -31,5 +32,6 @@ applyApolloMiddleware(app);
  * Primary app routes.
  */
 app.get('/health', health);
+app.get('*', pageNotFound);
 
 export default app;
