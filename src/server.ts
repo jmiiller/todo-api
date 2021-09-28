@@ -1,5 +1,8 @@
 import errorHandler from 'errorhandler';
+import dotenv from 'dotenv';
 import app from './app';
+
+dotenv.config();
 
 /**
  * Error Handler. Provides full stack

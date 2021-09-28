@@ -4,7 +4,8 @@ import responseTime from 'response-time';
 import path from 'path';
 import expressBunyanLogger from 'express-bunyan-logger';
 import health from './routes/health';
-import applyApolloMiddleware from './middleware/apollo';
+import applyApolloMiddleware from './middleware/apolloMiddleware';
+import configMiddleware from './middleware/configMiddleware';
 import pageNotFound from './routes/pageNotFound';
 
 // Create Express server
@@ -27,6 +28,8 @@ app.use(
     ],
   })
 );
+app.use(configMiddleware);
+
 applyApolloMiddleware(app).then(() => {
   app.get('/health', health);
   app.get('/*', pageNotFound);

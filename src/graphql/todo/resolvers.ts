@@ -24,7 +24,9 @@ export const resolvers = {
       args: Record<string, any>,
       context: any,
       info: any
-    ) => dummy[0],
+    ) => {
+
+    },
     deleteTodoItem: (
       parent: any,
       args: Record<string, any>,

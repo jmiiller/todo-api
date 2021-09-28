@@ -250,7 +250,7 @@ Let's dissect this project's `tsconfig.json`, starting with the `compilerOptions
     "paths": {
         "*": [
             "node_modules/*",
-            "src/types/*"
+            "src/@types/*"
         ]
     }
 },
@@ -343,7 +343,7 @@ In the `tsconfig.json` for this project you'll see the following:
 "paths": {
     "*": [
         "node_modules/*",
-        "src/types/*"
+        "src/@types/*"
     ]
 }
 ```
