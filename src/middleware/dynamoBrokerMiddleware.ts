@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
+import { DynamoDB } from 'aws-sdk';
 import DynamoBroker from '../lib/dynamoBroker';
 
 export default async function dynamoBrokerMiddleware(
@@ -8,7 +8,10 @@ export default async function dynamoBrokerMiddleware(
   next: NextFunction
 ) {
   const dynamoBroker = new DynamoBroker({
-    client: new DocumentClient({ apiVersion: '2012-08-10' }),
+    client: new DynamoDB.DocumentClient({
+      apiVersion: '2012-08-10',
+      region: 'us-west-2',
+    }),
     config: req.config,
     log: req.log,
   });

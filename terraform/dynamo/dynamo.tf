@@ -4,15 +4,9 @@ resource "aws_dynamodb_table" "todo-items" {
   read_capacity  = 5
   write_capacity = 5
   hash_key       = "id"
-  range_key      = "content"
 
   attribute {
     name = "id"
-    type = "S"
-  }
-
-  attribute {
-    name = "content"
     type = "S"
   }
 

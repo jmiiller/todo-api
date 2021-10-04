@@ -10,7 +10,7 @@
     "license": "MIT",
     "scripts": {
         "build-ts": "tsc",
-        "build": "npm run build-ts && npm run lint && npm run copy-static-assets",
+        "build": "rimraf dist && npm run build-ts && npm run copy-static-assets",
         "copy-static-assets": "ts-node copyStaticAssets.ts",
         "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
         "start": "node dist/server.js",
@@ -23,7 +23,7 @@
         "@types/lodash": "^4.14.173",
         "apollo-server-express": "^3.3.0",
         "async": "3.2.0",
-        "aws-sdk": "^2.993.0",
+        "aws-sdk": "^2.999.0",
         "bcrypt-nodejs": "0.0.3",
         "body-parser": "1.19.0",
         "bunyan": "^1.8.15",
@@ -39,6 +39,7 @@
         "nodemailer": "6.4.17",
         "passport-local": "1.0.0",
         "response-time": "^2.3.2",
+        "rimraf": "^3.0.2",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

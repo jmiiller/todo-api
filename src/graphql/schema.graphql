@@ -1,14 +1,14 @@
 type Query {
   todoItems: [TodoItem]!
+  todoItem(input: TodoItemInput!): TodoItem
 }
 
 type Mutation {
-  todoItem(input: TodoItemInput!): TodoItem
   putTodoItem(input: PutTodoItemInput!): TodoItem!
   deleteTodoItem(input: DeleteTodoItemInput!): TodoItem!
 }
 
-input PutTodoItemInput {
+input TodoItemInput {
   id: String!
 }
 

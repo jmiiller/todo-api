@@ -15,7 +15,7 @@ export default async function applyApolloMiddleware(app: Express) {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => req,
+    context: ({ req }) => ({ req }),
   });
   await server.start();
 

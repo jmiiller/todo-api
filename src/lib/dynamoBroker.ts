@@ -1,6 +1,12 @@
-import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
 import Bunyan from 'bunyan';
 import { v4 as uuidv4 } from 'uuid';
+import { DynamoDB } from 'aws-sdk';
+import {
+  DeleteItemInput,
+  GetItemInput,
+  PutItemInput,
+  ScanInput,
+} from 'aws-sdk/clients/dynamodb';
 import Config from './config';
 
 interface GetTodoItemProps {
@@ -16,7 +22,7 @@ interface DeleteTodoItemProps {
 }
 
 export default class DynamoBroker {
-  private client: DocumentClient;
+  private client: DynamoDB.DocumentClient;
 
   private config: Config;
 
@@ -27,7 +33,7 @@ export default class DynamoBroker {
     config,
     log,
   }: {
-    client: DocumentClient;
+    client: DynamoDB.DocumentClient;
     config: Config;
     log: Bunyan;
   }) {
@@ -36,13 +42,24 @@ export default class DynamoBroker {
     this.log = log;
   }
 
+  async getTodoItems() {
+    const params = {
+      TableName: this.config.dynamoTableName,
+      Select: 'ALL_ATTRIBUTES',
+    } as ScanInput;
+
+    const response = await this.client.scan(params).promise();
+
+    return response.Items;
+  }
+
   async getTodoItem({ id }: GetTodoItemProps) {
     const params = {
       TableName: this.config.dynamoTableName,
       Key: {
         id,
       },
-    };
+    } as GetItemInput;
 
     const response = await this.client.get(params).promise();
 
@@ -50,17 +67,22 @@ export default class DynamoBroker {
   }
 
   async putTodoItem({ content }: PutTodoItemProps) {
-    const params = {
+    const id = uuidv4();
+    const putParams = {
       TableName: this.config.dynamoTableName,
       Item: {
-        id: uuidv4(),
+        id,
         content,
       },
-    };
+    } as PutItemInput;
 
-    const response = await this.client.put(params).promise();
+    await this.client.put(putParams).promise();
 
-    return response.Attributes;
+    const response = await this.getTodoItem({
+      id,
+    });
+
+    return response;
   }
 
   async deleteTodoItem({ id }: DeleteTodoItemProps) {
@@ -69,7 +91,8 @@ export default class DynamoBroker {
       Key: {
         id,
       },
-    };
+      ReturnValues: 'ALL_OLD',
+    } as DeleteItemInput;
 
     const response = await this.client.delete(params).promise();
 
