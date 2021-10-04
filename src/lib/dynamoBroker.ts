@@ -1,11 +1,13 @@
 import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
+import Bunyan from 'bunyan';
+import { v4 as uuidv4 } from 'uuid';
+import Config from './config';
 
 interface GetTodoItemProps {
   id: string;
 }
 
 interface PutTodoItemProps {
-  id: string;
   content: string;
 }
 
@@ -16,44 +18,61 @@ interface DeleteTodoItemProps {
 export default class DynamoBroker {
   private client: DocumentClient;
 
-  private tableName: string;
+  private config: Config;
 
-  constructor(client: DocumentClient, tableName: string) {
+  private log: Bunyan;
+
+  constructor({
+    client,
+    config,
+    log,
+  }: {
+    client: DocumentClient;
+    config: Config;
+    log: Bunyan;
+  }) {
     this.client = client;
-    this.tableName = tableName;
+    this.config = config;
+    this.log = log;
   }
 
   async getTodoItem({ id }: GetTodoItemProps) {
     const params = {
-      TableName: this.tableName,
+      TableName: this.config.dynamoTableName,
       Key: {
         id,
       },
     };
 
-    await this.client.get(params);
+    const response = await this.client.get(params).promise();
+
+    return response.Item;
   }
 
-  async putTodoItem({ id, content }: PutTodoItemProps) {
+  async putTodoItem({ content }: PutTodoItemProps) {
     const params = {
-      TableName: this.tableName,
+      TableName: this.config.dynamoTableName,
       Item: {
-        id,
+        id: uuidv4(),
         content,
       },
     };
 
-    await this.client.put(params);
+    const response = await this.client.put(params).promise();
+
+    return response.Attributes;
   }
 
   async deleteTodoItem({ id }: DeleteTodoItemProps) {
     const params = {
-      TableName: this.tableName,
+      TableName: this.config.dynamoTableName,
       Key: {
         id,
       },
     };
 
-    await this.client.delete(params);
+    const response = await this.client.delete(params).promise();
+
+    return response.Attributes;
   }
 }

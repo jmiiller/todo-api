@@ -3,12 +3,21 @@ type Query {
 }
 
 type Mutation {
+  todoItem(input: TodoItemInput!): TodoItem
   putTodoItem(input: PutTodoItemInput!): TodoItem!
-  deleteTodoItem(id: String!): TodoItem!
+  deleteTodoItem(input: DeleteTodoItemInput!): TodoItem!
+}
+
+input PutTodoItemInput {
+  id: String!
 }
 
 input PutTodoItemInput {
   content: String!
+}
+
+input DeleteTodoItemInput {
+  id: String!
 }
 
 type TodoItem {

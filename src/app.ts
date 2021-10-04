@@ -7,6 +7,7 @@ import health from './routes/health';
 import applyApolloMiddleware from './middleware/apolloMiddleware';
 import configMiddleware from './middleware/configMiddleware';
 import pageNotFound from './routes/pageNotFound';
+import dynamoBrokerMiddleware from './middleware/dynamoBrokerMiddleware';
 
 // Create Express server
 const app = express();
@@ -29,6 +30,7 @@ app.use(
   })
 );
 app.use(configMiddleware);
+app.use(dynamoBrokerMiddleware);
 
 applyApolloMiddleware(app).then(() => {
   app.get('/health', health);

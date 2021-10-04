@@ -7,9 +7,11 @@ export default async function dynamoBrokerMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const dynamoBroker = new DynamoBroker(
-    new DocumentClient({ apiVersion: '2012-08-10' })
-  );
+  const dynamoBroker = new DynamoBroker({
+    client: new DocumentClient({ apiVersion: '2012-08-10' }),
+    config: req.config,
+    log: req.log,
+  });
 
   req.dynamoBroker = dynamoBroker;
 
