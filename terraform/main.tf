@@ -14,3 +14,12 @@ provider "aws" {
 module "dynamo" {
   source = "./dynamo"
 }
+
+locals {
+  name = "todo-api"
+
+  common_tags = tomap({
+    module = "todo-api"
+    version = "0.0.1"
+  })
+}
