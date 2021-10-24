@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import responseTime from 'response-time';
 import path from 'path';
 import expressBunyanLogger from 'express-bunyan-logger';
+import favicon from 'serve-favicon';
 import health from './routes/health';
 import applyApolloMiddleware from './middleware/apolloMiddleware';
 import configMiddleware from './middleware/configMiddleware';
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(responseTime());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')))
 app.use(
   expressBunyanLogger({
     name: 'todo-api',
