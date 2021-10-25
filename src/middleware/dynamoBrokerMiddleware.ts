@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { DynamoDB } from 'aws-sdk';
-import DynamoBroker from '../lib/dynamoBroker';
+import DynamoBroker from '../graphql/data-sources/dynamoBroker';
 
 export default async function dynamoBrokerMiddleware(
   req: Request,

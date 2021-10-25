@@ -7,8 +7,8 @@ import {
   PutItemInput,
   ScanInput,
 } from 'aws-sdk/clients/dynamodb';
-import Config from './config';
-import { TodoItem } from '../graphql/types';
+import Config from '../../lib/config';
+import { TodoItem } from '../types';
 
 interface GetTodoItemProps {
   id: string;

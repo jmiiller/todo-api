@@ -1,4 +1,4 @@
-import express from 'express'; // compresses requests
+import express from 'express';
 import bodyParser from 'body-parser';
 import responseTime from 'response-time';
 import path from 'path';

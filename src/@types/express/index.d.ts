@@ -1,5 +1,5 @@
 import Config from '../../lib/config';
-import DynamoBroker from '../../lib/dynamoBroker';
+import DynamoBroker from '../../graphql/data-sources/dynamoBroker';
 import Bunyan from 'bunyan';
 
 declare global {
