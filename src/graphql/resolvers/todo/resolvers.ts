@@ -1,8 +1,9 @@
 import Context from '../../Context';
+import { Resolvers } from '../../types';
 
-export const resolvers = {
+export const resolvers: Resolvers = {
   Query: {
-    todoItem: (parent: any, args: Record<string, any>, context: Context) => {
+    todoItem: (parent, args, context) => {
       const { input } = args;
       context.req.log.info({ input }, 'todoItem');
 
@@ -16,22 +17,14 @@ export const resolvers = {
     },
   },
   Mutation: {
-    putTodoItem: async (
-      parent: any,
-      args: Record<string, any>,
-      context: Context
-    ) => {
+    putTodoItem: async (parent, args, context) => {
       const { input } = args;
-      // console.log(JSON.stringify(context));
+
       context.req.log.info({ input }, 'todoItem');
 
       return context.req.dynamoBroker.putTodoItem(input);
     },
-    deleteTodoItem: (
-      parent: any,
-      args: Record<string, any>,
-      context: Context
-    ) => {
+    deleteTodoItem: (parent, args, context) => {
       const { input } = args;
 
       context.req.log.info({ input }, 'todoItem');

@@ -2,7 +2,7 @@ import { Express } from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import fs from 'fs';
 import path from 'path';
-import resolvers from '../graphql/resolvers/resolvers';
+import resolvers from './resolvers';
 
 export default async function applyApolloMiddleware(app: Express) {
   const buffer = fs.readFileSync(

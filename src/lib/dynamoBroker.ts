@@ -8,6 +8,7 @@ import {
   ScanInput,
 } from 'aws-sdk/clients/dynamodb';
 import Config from './config';
+import { TodoItem } from '../graphql/types';
 
 interface GetTodoItemProps {
   id: string;
@@ -42,7 +43,7 @@ export default class DynamoBroker {
     this.log = log;
   }
 
-  async getTodoItems() {
+  async getTodoItems(): Promise<TodoItem[]> {
     const params = {
       TableName: this.config.dynamoTableName,
       Select: 'ALL_ATTRIBUTES',
@@ -50,10 +51,10 @@ export default class DynamoBroker {
 
     const response = await this.client.scan(params).promise();
 
-    return response.Items;
+    return response.Items as TodoItem[];
   }
 
-  async getTodoItem({ id }: GetTodoItemProps) {
+  async getTodoItem({ id }: GetTodoItemProps): Promise<TodoItem> {
     const params = {
       TableName: this.config.dynamoTableName,
       Key: {
@@ -63,10 +64,10 @@ export default class DynamoBroker {
 
     const response = await this.client.get(params).promise();
 
-    return response.Item;
+    return response.Item as TodoItem;
   }
 
-  async putTodoItem({ content }: PutTodoItemProps) {
+  async putTodoItem({ content }: PutTodoItemProps): Promise<TodoItem> {
     const id = uuidv4();
     const putParams = {
       TableName: this.config.dynamoTableName,
@@ -85,7 +86,7 @@ export default class DynamoBroker {
     return response;
   }
 
-  async deleteTodoItem({ id }: DeleteTodoItemProps) {
+  async deleteTodoItem({ id }: DeleteTodoItemProps): Promise<TodoItem> {
     const params = {
       TableName: this.config.dynamoTableName,
       Key: {
@@ -96,6 +97,6 @@ export default class DynamoBroker {
 
     const response = await this.client.delete(params).promise();
 
-    return response.Attributes;
+    return response.Attributes as TodoItem;
   }
 }

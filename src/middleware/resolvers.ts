@@ -1,4 +1,4 @@
 import { merge } from 'lodash';
-import todoResolvers from './todo';
+import todoResolvers from '../graphql/resolvers/todo';
 
 export default merge(todoResolvers);
