@@ -9,6 +9,12 @@ resource "aws_lambda_function" "lambda" {
   runtime          = "nodejs14.x"
   publish          = true
   tags             = local.common_tags
+
+  environment {
+    variables = {
+      DDB_TABLE_NAME = var.ddb_table_name
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
