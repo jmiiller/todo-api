@@ -13,7 +13,7 @@
         "build": "rimraf dist && npm run build-ts && npm run copy-static-assets",
         "copy-static-assets": "ts-node copyStaticAssets.ts",
         "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-        "start": "ts-node-dev --respawn dev/server-local.ts | bunyan",
+        "start": "ts-node-dev --respawn src/server-local.ts | bunyan",
         "test": "jest --forceExit --coverage --verbose",
         "provision": "bash scripts/provision.sh",
         "destroy": "bash ./scripts/destroy.sh",

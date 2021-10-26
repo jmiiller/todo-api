@@ -9,12 +9,15 @@ import applyApolloMiddleware from './middleware/apolloMiddleware';
 import configMiddleware from './middleware/configMiddleware';
 import pageNotFound from './routes/pageNotFound';
 import dynamoBrokerMiddleware from './middleware/dynamoBrokerMiddleware';
+import Config from './lib/config';
+
+const config = new Config();
 
 // Create Express server
 const app = express();
 
 // Express configuration
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.port || 3000);
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(responseTime());
